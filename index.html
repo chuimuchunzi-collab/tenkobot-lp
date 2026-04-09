@@ -1236,10 +1236,6 @@ h1, h2, h3, .section-heading {
     grid-template-columns: 1fr !important;
     gap: 16px;
   }
-  .cost-vs-badge {
-    margin: 0 auto;
-    transform: rotate(90deg);
-  }
   .pricing-grid { grid-template-columns: 1fr !important; }
   .btn-cta, .btn-line, .cta-btn {
     width: 100% !important;
@@ -1247,28 +1243,49 @@ h1, h2, h3, .section-heading {
     margin: 0 auto;
     white-space: nowrap;
   }
-  .cost-vs::before,
-  .cost-vs::after {
+  /* コスト比較：VSバッジを縦並び用に変更 */
+  .cost-vs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    position: relative;
+  }
+  .cost-vs-badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #F97316, #EA580C);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-en);
+    font-weight: 900;
+    font-size: 0.9rem;
+    box-shadow: 0 8px 24px rgba(249, 115, 22, 0.35);
+    position: relative;
+    z-index: 2;
+  }
+  /* 上から中央バッジへの流れ線 */
+  .cost-vs::before {
     content: "";
     display: block;
     width: 2px;
     height: 24px;
     background: linear-gradient(to bottom, transparent, #F97316);
-    margin: 0 auto;
+    margin-bottom: 4px;
   }
+  /* 中央バッジから下への矢印 */
   .cost-vs::after {
-    background: linear-gradient(to top, transparent, #F97316);
-  }
-  .cost-vs {
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    padding: 16px 0;
-  }
-  .cost-vs-badge {
-    width: 56px;
-    height: 56px;
-    font-size: 0.9rem;
+    content: "↓";
+    display: block;
+    color: #F97316;
+    font-size: 1.4rem;
+    font-weight: 900;
+    margin-top: 8px;
+    line-height: 1;
   }
   .cost-card--before .cost-price {
     text-decoration: none;
@@ -1634,7 +1651,7 @@ section, .container {
       </div>
       
       <!-- VS -->
-      <div style="display: flex; justify-content: center; align-items: center; z-index: 2;" class="reveal">
+      <div style="display: flex; justify-content: center; align-items: center; z-index: 2;" class="reveal cost-vs">
         <div class="cost-vs-badge">VS</div>
       </div>
       
