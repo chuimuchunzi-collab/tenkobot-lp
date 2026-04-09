@@ -385,6 +385,7 @@ a { color: inherit; text-decoration: none; }
 /* Hero Visual - Dashboard Card */
 .hero-dashboard {
   position: relative;
+  margin-top: 32px;
 }
 .dash-card {
   background: rgba(15, 23, 55, 0.88);
@@ -452,12 +453,12 @@ a { color: inherit; text-decoration: none; }
   color: rgba(255,255,255,0.35);
 }
 .dash-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 14px;
+  display: grid;
+  grid-template-columns: 20px 1fr auto;
+  gap: 12px;
+  align-items: center;
   padding: 14px 0;
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  flex-wrap: wrap;
   word-break: keep-all;
   overflow-wrap: anywhere;
 }
@@ -466,8 +467,7 @@ a { color: inherit; text-decoration: none; }
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  margin-top: 7px;
-  flex-shrink: 0;
+  margin: 0;
 }
 .dash-dot--green { background: var(--green-400); box-shadow: 0 0 8px var(--green-400); }
 .dash-dot--orange { background: var(--orange-400); box-shadow: 0 0 8px var(--orange-400); animation: pulse-dot 2s infinite; }
@@ -481,20 +481,19 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.82rem;
   font-weight: 700;
   color: rgba(255,255,255,0.9);
-  margin-bottom: 2px;
+  margin-bottom: 4px;
 }
 .dash-item-desc {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.4);
+  font-size: 0.8rem;
+  opacity: 0.6;
   line-height: 1.5;
 }
 .dash-item-time {
   font-family: var(--font-en);
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.25);
-  margin-left: auto;
-  flex-shrink: 0;
-  padding-top: 2px;
+  font-size: 0.8rem;
+  opacity: 0.5;
+  align-self: start;
+  padding-top: 4px;
 }
 
 /* Floating notification cards */
@@ -912,6 +911,14 @@ a { color: inherit; text-decoration: none; }
   color: var(--slate-800);
   margin-top: 4px;
 }
+.cost-note {
+  max-width: 100%;
+  overflow: visible;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  line-height: 1.8;
+  padding: 0 16px;
+}
 
 /* ==========================================
    PRICING
@@ -1092,6 +1099,11 @@ a { color: inherit; text-decoration: none; }
 .footer-nav-group { display: flex; flex-direction: column; gap: 10px; }
 .footer-nav-title { font-size: 0.78rem; font-weight: 900; color: rgba(255,255,255,0.7); }
 
+.sp-br { display: none; }
+@media (max-width: 640px) {
+  .sp-br { display: inline; }
+}
+
 h1, h2, h3, .section-heading {
   word-break: keep-all;
   overflow-wrap: anywhere;
@@ -1187,7 +1199,22 @@ h1, h2, h3, .section-heading {
   .flow-body h3 { font-size: 0.95rem; }
 
   .hero-desc br, .section-desc br, .flow-summary p br, .cost-note br, .problem-card p br { display: none; }
-  .hero-metrics { flex-direction: column; gap: 16px; }
+  .hero-metrics {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+  .hero-metrics > div {
+    text-align: center;
+  }
+  .hero-metric-value {
+    font-size: 1.3rem;
+  }
+  .hero-metric-label {
+    font-size: 0.7rem;
+  }
   .footer-inner { flex-direction: column; align-items: center; text-align: center; gap: 32px; }
 
   .cost-grid {
@@ -1204,6 +1231,44 @@ h1, h2, h3, .section-heading {
     max-width: 320px;
     margin: 0 auto;
     white-space: nowrap;
+  }
+  .cost-vs::before,
+  .cost-vs::after {
+    content: "";
+    display: block;
+    width: 2px;
+    height: 24px;
+    background: linear-gradient(to bottom, transparent, #F97316);
+    margin: 0 auto;
+  }
+  .cost-vs::after {
+    background: linear-gradient(to top, transparent, #F97316);
+  }
+  .cost-vs {
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 0;
+  }
+  .cost-vs-badge {
+    width: 56px;
+    height: 56px;
+    font-size: 0.9rem;
+  }
+  .cost-card--before .cost-price {
+    text-decoration: none;
+    color: var(--red-500, #EF4444);
+  }
+  .header-inner {
+    padding: 12px 16px !important;
+    min-height: 56px;
+  }
+  .logo img {
+    height: 36px !important;
+    width: auto;
+  }
+  .hero-dashboard {
+    margin-top: 40px;
   }
 }
 
@@ -1305,8 +1370,8 @@ section, .container {
             <div class="hero-metric-label">月額料金</div>
           </div>
           <div>
-            <div class="hero-metric-value">24/365</div>
-            <div class="hero-metric-label">自動稼働</div>
+            <div class="hero-metric-value">24<span style="font-size:0.55em;font-weight:700;">時間</span>365<span style="font-size:0.55em;font-weight:700;">日</span></div>
+            <div class="hero-metric-label">完全自動稼働</div>
           </div>
           <div>
             <div class="hero-metric-value">97%</div>
@@ -1407,7 +1472,7 @@ section, .container {
       </div>
     </div>
     <div class="problems-resolve reveal">
-      <p>その仕事、<span class="hl">全部Tenkobotに</span>任せられます。</p>
+      <p>その仕事、<span class="hl">全部Tenkobotに</span><br class="sp-br">任せられます。</p>
     </div>
   </div>
 </section>
@@ -1491,7 +1556,7 @@ section, .container {
   <div class="container">
     <div class="text-center reveal" style="margin-bottom: 56px;">
       <div class="section-tag section-tag--blue">Business Management</div>
-      <h2 class="section-heading">日報のデジタル化で<br><em>「誰が未提出か」をリアルタイム可視化</em></h2>
+      <h2 class="section-heading">日報のデジタル化で<br>「誰が未提出か」を<br class="sp-br">リアルタイム可視化</h2>
       <p class="section-desc mx-auto">スマホひとつで稼働時間、距離、ステータスを可視化。現場の「今」が手に取るようにわかります。</p>
     </div>
     <div class="features-grid">
@@ -1575,7 +1640,7 @@ section, .container {
     
     <div class="cost-result reveal">
       <div class="cost-result-number">約97%削減</div>
-      <p class="cost-result-text">※事務担当者が不要になるわけではありません。Tenkobotが定型作業を自動化することで、事務担当者はより重要な業務に集中できるようになります。</p>
+      <p class="cost-result-text cost-note">※事務担当者が不要になるわけではありません。Tenkobotが定型作業を自動化することで、事務担当者はより重要な業務に集中できるようになります。</p>
     </div>
   </div>
 </section>
@@ -1598,7 +1663,7 @@ section, .container {
       <h2 class="section-heading">選べる6つのプラン</h2>
       <div class="pricing-campaign">
         <div class="campaign-banner">🎉 1年一括払いで1ヶ月分無料！</div>
-        <div class="campaign-banner">✅ 今なら全プラン導入費0円キャンペーン実施中</div>
+        <div class="campaign-banner">✅ 今なら全プラン導入費0円<br class="sp-br">キャンペーン実施中</div>
       </div>
     </div>
     <div class="pricing-grid">
@@ -1753,7 +1818,7 @@ section, .container {
   <div class="container">
     <div class="section-tag section-tag--light">Contact</div>
     <h2 class="cta-heading">まずはお気軽にご相談ください</h2>
-    <p class="cta-desc">Tenkobotが、温かみのある声と確かな技術で、皆様の運送現場を24時間お守りします。</p>
+    <p class="cta-desc">Tenkobotが、温かみのある声と確かな技術で、<br class="sp-br">皆様の運送現場を24時間お守りします。</p>
     <div class="cta-btns">
       <!-- ★差し替えポイント: LINE公式URL -->
       <a href="#line" class="btn btn-cta" style="font-size:1.1rem; padding: 20px 50px;">
